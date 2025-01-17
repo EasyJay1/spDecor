@@ -1,0 +1,96 @@
+{% extends "base_accounts.html" %}
+{% load socialaccount %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container-fluid conter">
+    <div class="row justify-content-center">
+    <div style="padding-top: 30px;"></div>
+        <div class="packs">
+        <div class="ring">
+            <i style="--clr:#0000ff;"></i> <!-- Blue -->
+            <i style="--clr:#ff0057;"></i>
+            <i style="--clr:#fffd44;"></i>
+            <div class="login">
+                <p style="color:#4285f4;font-family: 'Eagle Lake';">Login</p>
+                <div class="social-login text-center">
+                    <a href="{% provider_login_url 'google' %}" class="google">
+                        <img width="50" class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/goo.png' %}"
+                        style="border-radius: 50%;">
+                    </a>
+                    <a href="#" class="facebook">
+                        <img class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/item--link.svg' %}" /> <!-- Font Awesome icon for Facebook -->
+                    </a>
+                    <a href="#" class="git">
+                        <img width="40" class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/git2.png' %}"/>
+                    </a>
+                </div>
+                <form id="login_form" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+                    <div class="form-group first">
+                        {# Display non-field errors in red #}
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.non_field_errors %}
+                            <strong style="color: red;">{{ error }}</strong><br>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        {# Username or email input field with error message #}
+                        <div class="inputBx">
+                            <input class="form-control {% if form.errors.login %}is-invalid{% endif %}" type="text" name="login" placeholder="{% trans 'Username' %}" required>
+                            {% if form.errors.login %}
+                            <div class="invalid-feedback" style="color: red;">
+                                {% for error in form.errors.login %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {# Password input field with error message #}
+                        <div class="inputBx">
+                            <input class="form-control {% if form.errors.password %}is-invalid{% endif %}" type="password" name="password" placeholder="{% trans 'Password' %}" required>
+                            {% if form.errors.password %}
+                            <div class="invalid-feedback" style="color: red;">
+                                {% for error in form.errors.password %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {# Remember Me checkbox #}
+                        <div class="d-flex mb-5 align-items-center">
+                            <label class="control--checkbox mb-0">
+                                <span class="caption">Remember me</span>
+                                <input type="checkbox" checked="checked" />
+                                <div class=""></div>
+                            </label>
+                        </div>
+                        <div class="inputBx">
+                            <input id="submit-btn" type="submit" value="Sign in">
+                        </div>
+
+                        <div class="links">
+                            {# Forgot Password link #}
+                            <a href="{% url 'account_reset_password' %}">Forget Password</a>
+                            <a href="{% url 'account_signup' %}">Signup</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+  <script>
+    document.getElementById('login_form').addEventListener('submit', function () {
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('please-wait-message').style.display = 'flex';
+    });
+  </script>
+
+
+{% endblock %}

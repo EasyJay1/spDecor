@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- Basic Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Jaytechnlogic">
+    <meta property="og:title" content="Transform Your Home | Home Decor Ideas">
+    <meta property="og:description" content="Explore exquisite room decor ideas and elevate your living space with elegance and style.">
+    <meta property="og:image" content="{% static 'images/public/Elogo.png' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}">
+
+    <!-- Page Title -->
+    <title>EssentialByCandy.com</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Sofia|Eagle+Lake|Vast+Shadow&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts/icomoon/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+
+    <!-- Additional CSS for Older Browsers -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+
+    <!-- IE Compatibility -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!-- Navbar Section -->
+    <div class="pos-f-t">
+        <section class="nav-overlay" id="Nav-overlay"></section>
+        <nav class="navbar">
+            <!-- Navbar Toggle for Small Screens -->
+            <div class="navbar-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+
+            <!-- Navbar Brand -->
+            <div class="navbar-brand">
+                <a href="#"></a>
+            </div>
+
+            <!-- Navbar Links -->
+            <div class="navbar-menu">
+                <ul class="navbar-links">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'index' %}">Services</a></li>
+                    <li><a href="{% url 'index' %}">Real-Estate</a></li>
+                    <li><a href="{% url 'index' %}">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Playstore Links and Cart -->
+            <div class="playstore">
+                <div class="icon-list">
+                    <div class="icon-links">
+                        <a href="#"><img width="30%" loading="lazy" alt="Apple Store" src="{% static 'images/public/link--applestorebadgeensvg.svg' %}"></a>
+                        <a href="#"><img width="30%" loading="lazy" alt="Google Play" src="{% static 'images/public/link--googleplaybadgeenpng@2x.png' %}"></a>
+                    </div>
+                    <div class="cart-dropdown">
+                        <i class="fas fa-shopping-cart cart-icon" style="color:white;"></i>
+                        <div class="dropdown-content">
+                            <ul>
+                                <li><a href="#"><i class="fas fa-user-alt"></i> Profile</a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i> Carts</a></li>
+                                <li><a href="#"><i class="fas fa-wallet"></i> Checkout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Settings -->
+            <div class="setting">
+                {% if user.is_authenticated %}
+                <nav class="navbar2">
+                    <div class="dropdown2">
+                        <i class="nav-link fas fa-cog" id="servicesDropdownp" role="button" data-toggle="dropdown" style="color:white;" aria-haspopup="true" aria-expanded="false">
+                            {{ request.user.last_name|slice:"-1:" }}
+                        </i>
+                        <div class="dropdown-menu details" aria-labelledby="servicesDropdownp">
+                            <a class="fas fa-book" href="{% url 'event_detail' %}"> My ticket(s)</a><br>
+                            <a class="fas fa-user-alt" href="{% url 'account_change_password' %}"> Change Password</a><br>
+                            <hr>
+                            <a class="fas fa-sign-out-alt" href="{% url 'account_logout' %}"> Sign Out</a>
+                            {% if request.user.is_staff %}
+                            <a href="{% url 'deactivate_ticket' %}"> Ticket Checker</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+
+    <!-- Alerts Section -->
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+
+    <!-- Cookie Popup -->
+    <div class="popup-container" id="cookie-popup">
+        <button type="button" class="btn-close btn-close-red" onclick="closePopup()" style="float: right;"></button>
+        <p>We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+        <button class="button" style="padding: 0 5px 2px 5px;" id="accept-cookie"><i>I Accept</i></button>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
+    <script src="{% static 'js/plugin.js' %}"></script>
+    <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+
+
+<style>
+    <style>
+            .content-blur {
+            filter: blur(5px);
+        }
+
+/* Navbar Styling */
+/* Default Navbar for Larger Screens */
+/* Basic Navbar Styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: white;
+
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border: none;
+            padding: 5px;
+            -webkit-transition: .4s;
+            transition: .4s;
+
+}
+
+.navbar-brand a {
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+/* Navbar Toggle (hamburger menu) */
+.navbar-toggle {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+    align-items: center;
+}
+
+.navbar-toggle .bar {
+    height: 3px;
+    width: 30px;
+    background-color: white;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* Navbar Menu */
+.navbar-menu {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.navbar-links li a {
+    text-decoration: none;
+    color: white;
+}
+
+.navbar-links li a:hover {
+    color: #42a5f5; /* Light blue color for hover */
+}
+
+/* Playstore Icons and Cart */
+.playstore {
+    display: flex;
+    gap: 20px;
+}
+
+.icon-links a img {
+    width: 50px; /* Adjust size */
+}
+
+.cart-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Settings Dropdown */
+.navbar2 .dropdown-menu {
+    display: none;
+}
+
+.navbar2 .dropdown2:hover .dropdown-menu {
+    display: block;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .content-wrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-align: center; /* Centers the text horizontally */
+      padding: 20px; /* Adds some space around the content */
+      display: flex; /* Enables flexbox layout */
+      align-items: center; /* Centers items horizontally */
+      justify-content: flex-end; /* Ensures content is at the bottom */
+    }
+
+    .navbar-menu {
+        display: none; /* Hide menu by default */
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navbar-menu.active {
+        display: flex; /* Show when toggle is clicked */
+    }
+
+    .navbar-toggle {
+        display: flex; /* Show hamburger on small screens */
+    }
+
+    .navbar-links {
+        flex-direction: column;
+        text-align: center;
+
+    width: 100%;
+    margin: 0;
+    border-radius: 10px;
+    background-color: gray;
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.15);
+
+    }
+
+    .navbar-links li a {
+        padding: 10px;
+
+            width: 100%;
+    text-align: center;
+    margin: 10px 0;
+
+    }
+        .nav-overlay {
+            display: none; /* Initially hidden */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+
+        }
+        .nav-overlay.active {
+            display: block; /* Show when active */
+        }
+
+}
+
+
+
+
+/* Overlay for Mobile Menu */
+.nav-overlay {
+    display: none; /* Initially hidden */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+.nav-overlay.active {
+    display: block; /* Show when active */
+}
+
+/* Responsive Navbar Menu */
+
+
+/* Secondary Navbar Styling */
+.navbar2 {
+    display: flex;
+    justify-content: flex-end; /* Align items to the right */
+}
+
+.dropdown2 {
+    position: relative;
+}
+
+.dropdown-menu.details {
+    position: absolute;
+    left: -200%; /* Adjust dropdown positioning */
+    top: 100%;
+    padding: 10px;
+    display: none; /* Initially hidden */
+}
+
+.dropdown-menu.details.show {
+    display: block; /* Show when triggered */
+}
+
+/* Icon List Styling */
+.icon-list {
+    display: flex;
+    justify-content: space-between; /* Ensures cart floats to the right */
+    align-items: center;
+}
+
+.icon-links a {
+    margin-right: 10px;
+}
+
+/* Cart Dropdown */
+.cart-dropdown {
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px;
+}
+
+.cart-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0; /* Aligns dropdown to cart icon */
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+.dropdown-content ul {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+}
+
+.dropdown-content ul li {
+    margin: 5px;
+}
+
+.dropdown-content ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    border-radius: 4px;
+    gap: 10px;
+}
+
+/* Dropdown Item Hover */
+.dropdown-content ul li a:hover {
+    background-color: #f2f2f2;
+    color: var(--primary-color);
+}
+
+/* Dropdown Display on Hover */
+.cart-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.cart-dropdown:hover .cart-icon {
+    color: var(--primary-color);
+}
+
+/* Additional Styling */
+.index-row {
+    position: relative;
+    background-image: url('/static/images/public/bv.gif');
+    height: 800px;
+    background-size: cover;
+    padding: 0px 0px;
+}
+
+
+</style>
+
+<style>
+/* General Alert Styling */
+.alert {
+    position: fixed;
+    top: 20px;
+    z-index: 9999;
+    left: 50%;
+    transform: translateX(-50%);
+    color: navy;
+    opacity: 90%;
+    padding: 10px;
+    font-weight: bold;
+    transition: 0.4s;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 50%;
+    text-align: center;
+}
+
+/* Song List Container */
+.song-list-container {
+    max-height: auto; /* Adjusts height based on content */
+}
+
+/* Cookie Popup */
+#cookie-popup {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    z-index: 9999;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: gray;
+    color: aliceblue;
+    width: 80%;
+    opacity: 90%;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Navbar Positioning */
+.pos-f-t {
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    width: 100%;
+    max-width: 100vw; /* Prevents overflow */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 1.15);
+    left: 0; /* Aligns to the left edge */
+}
+
+/* Index Row */
+.index-row {
+    height: 100vh; /* Full viewport height */
+    background-image: url('/static/images/public/bv.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    overflow: hidden; /* Prevents overflow */
+}
+
+/* Welcome Overlay */
+.welcome-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(3px);
+}
+
+.welcome-box {
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.9);
+    max-width: 400px;
+}
+
+.welcome-text {
+    font-size: 12px;
+    font-weight: bold;
+    white-space: pre-wrap;
+    border-right: 3px solid;
+    display: inline-block;
+    vertical-align: bottom;
+    font-family: sans-serif;
+}
+
+/* Content Blur */
+.content-blur {
+    filter: blur(5px);
+}
+
+/* Chat Header */
+.chat_header2 {
+    font-size: 13px;
+    font-family: 'Roboto';
+    font-weight: 500;
+    color: #f3f3f3;
+    height: 55px;
+    background: #42a5f5;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding-top: 8px;
+    width: 60%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Login Link */
+.login-link {
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
+/* Icon Container */
+.icon-container {
+    border: 1px solid white;
+    padding: 5px;
+    border-radius: 50%; /* Optional circular border */
+}
+
+/* Global Body Styling */
+body,
+html {
+    margin: 10;
+    padding: 10;
+    font-family: 'Eagle Lake';
+    color: white;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .box_text p {
+        font-size: 8px;
+        line-height: 35px;
+        font-weight: 400;
+        text-align: left;
+        color: #181716;
+        padding-right: 20px;
+    }
+    .slider_section {
+        padding-top: 50px;
+    }
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const cookiePopup = document.getElementById('cookie-popup');
+    const acceptButton = document.getElementById('accept-cookie');
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+
+    // Show cookie popup if not accepted
+    if (!cookiesAccepted) {
+        cookiePopup.style.display = 'block';
+    }
+
+    acceptButton.addEventListener('click', function () {
+        cookiePopup.style.display = 'none';
+        localStorage.setItem('cookiesAccepted', true);
+    });
+});
+
+// Close welcome overlay
+function closeWelcomeBox() {
+    document.getElementById('welcomeOverlay').style.display = 'none';
+}
+
+// Close popup container
+function closePopup() {
+    document.querySelector('.popup-container').style.display = 'none';
+}
+</script>
+
+<script>
+// Mobile Menu Toggle
+const mobileMenu = document.getElementById('mobile-menu');
+const navbarMenu = document.querySelector('.navbar-menu');
+const navOverlay = document.getElementById('Nav-overlay');
+
+mobileMenu.addEventListener('click', () => {
+    navbarMenu.classList.toggle('active');
+    navOverlay.classList.toggle('active');
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach((alert) => {
+            const bootstrapAlert = new bootstrap.Alert(alert);
+            bootstrapAlert.close();
+        });
+    }, 3000); // Automatically closes alerts after 3 seconds
+});
+</script>
+</body>
+</html>
+
+    {% block content %}
+    {% endblock content %}

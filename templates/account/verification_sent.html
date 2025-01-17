@@ -1,0 +1,22 @@
+{% extends "base_accounts.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<div class="row justify-content-center p-3">
+    <h1>{% trans "Verify Your E-mail Address" %}</h1>
+
+    <p>{% blocktrans %}We have sent an e-mail to you for verification.
+        <br>Follow the link provided to finalize the signup process. <i>Code will Expire in 24/hrs</i>
+        <br><strong>Please contact <a href=""> (Jay TECHnLOGIC)</a> if you do not receive it within a few minutes.{% endblocktrans %}</strong></p>
+
+<div>
+  <p >Already have an account? Then please <a class="btn2" href="{% url 'account_login' %}" > sign in</a></p>
+</div>
+</div>
+{% endblock %}

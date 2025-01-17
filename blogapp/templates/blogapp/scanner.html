@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Scanner</title>
+</head>
+<body>
+    <div class="container_capture">
+        <h1>Ticket Scanner</h1>
+        <strong id="result">Scanning...</strong>
+        <div id="qr-video-container">
+            <video id="qr-video" autoplay></video>
+            <div id="capture-border"></div>
+        </div>
+
+        <a class="fas " href="{% url 'deactivate_ticket' %}"> Use Code Checker</a>
+
+    </div>
+
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+    <script>
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+            .then(function(stream) {
+                var video = document.getElementById('qr-video');
+                video.srcObject = stream;
+                video.play();
+
+                var qrCanvas = document.createElement('canvas');
+                var qrContext = qrCanvas.getContext('2d');
+
+                function checkQRCode() {
+                    qrCanvas.width = video.videoWidth;
+                    qrCanvas.height = video.videoHeight;
+                    qrContext.drawImage(video, 0, 0, qrCanvas.width, qrCanvas.height);
+
+                    try {
+                        var qrCode = jsQR(qrContext.getImageData(0, 0, qrCanvas.width, qrCanvas.height).data, qrCanvas.width, qrCanvas.height);
+                        if (qrCode) {
+                            handleQRCode(qrCode.data);
+                        } else {
+                            setTimeout(checkQRCode, 200); // Check again in 200ms
+                        }
+                    } catch (error) {
+                        console.error('Error decoding QR code', error);
+                        setTimeout(checkQRCode, 200); // Check again in 200ms
+                    }
+                }
+
+                function handleQRCode(qrData) {
+                    document.getElementById('result').innerText = 'Scanned QR Code: ' + qrData;
+
+                    // Send QR data to backend for validation
+                    validateTicket(qrData);
+                }
+
+                function validateTicket(qrData) {
+                    fetch('/validate_ticket/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken')
+                        },
+                        body: JSON.stringify({ code: qrData })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.valid) {
+                            alert('Ticket successfully validated!');
+                        } else if (data.used) {
+                            alert(`Ticket already used at ${data.used_date}.`);
+                        } else {
+                            alert('Invalid or already used ticket code.');
+                        }
+                        setTimeout(checkQRCode, 200); // Restart scanning
+                    })
+                    .catch(error => {
+                        console.error('Error validating ticket', error);
+                        alert('Error validating ticket. Please try again.');
+                        setTimeout(checkQRCode, 200); // Restart scanning
+                    });
+                }
+
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                break;
+                            }
+                        }
+                    }
+                    return cookieValue;
+                }
+
+                checkQRCode(); // Start QR code scanning
+            })
+            .catch(function(error) {
+                console.error('Error accessing camera', error);
+                alert('Error accessing camera. Please allow camera access.');
+            });
+    </script>
+</body>
+</html>
+{% endblock %}

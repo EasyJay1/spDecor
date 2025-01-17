@@ -1,0 +1,733 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<!-- Loading Screen -->
+<div id="loadingScreen" style="display: flex; justify-content: center; align-items: center; position: fixed; width: 100%;
+height: 100%; background-color: rgba(255, 255, 255, 0.9); z-index: 10000;">
+<div class="loading-container">
+  <img style="border-radius: 100%;" src="{% static 'images/public/Elogo.png' %}" class="loading" />
+</div>
+</div>
+
+    {% if user.is_authenticated %}
+    {% else %}
+    <div id="welcomeOverlay" class="welcome-overlay" >
+        <div class="welcome-box">
+        <button style="right: 5px; top: 5px; position: absolute;" type="button" class="btn-close btn-close-white"
+                aria-label="Close" onclick="closeWelcomeBox()"></button>
+            <div class="welcome-box-head">
+                <div class="chat_option2">
+                    <div class="header_img2">
+                        <img src="{% static 'images/public/Elogo.png' %}" />
+                    </div>
+                </div>
+                <i id="welcomeText" class="welcome-text"></i>
+
+            </div><hr>
+            <a href="" class="btn-process" style="color: aliceblue !important;" onclick="closeWelcomeBox()">Get Started <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+<div class="contain">
+<div class="index-row">
+  <div class="content-wrapper">
+    <img src="{% static 'images/public/Elogo.png' %}" class="logo-img" alt="Logo" />
+    <p class="display-3 text-white animated slideInDown custom-text">
+      <i>Transform Your Home, Transform Your Life</i>
+    </p>
+  </div>
+</div>
+
+    <div class="row" id="upcoming" style="left: 0;position: relative; display: flex;background-image: url('/static/images/public/bv2.png');
+            height: 1200px;   padding:20px; background-size: cover;">
+
+    <!-- Gallery -->
+<div id="gallery" class="Gallery">
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center">Galleries</h1>
+
+      <!-- Video for small screens -->
+      <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 video-container" style="border: 1px solid gray; padding: 5px; background-color: rgba(0, 0, 0, 0.5); border-radius: 30px;">
+      <div class="">
+        <div class="video-section">
+          <figure style="margin: 5px; text-align: center;">
+            <video controls width="100%" height="auto" style="border-radius: 20px;">
+              <source src="{% static 'images/public/greet.mp4' %}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </figure>
+        </div>
+      </div>
+          <div class="Gallery_text">
+          <div class="song-list-container" id="song-list-container">
+            <ul class="song-list" style="list-style: none; padding: 5px;">
+              <li>
+                <div class="gallery-container">
+                  <div class="gallery-text">
+                    <h2 class="thick-underline">Meet Me...</h2>
+                    <p>
+                      Home décor is more than just arranging furniture or hanging art on the walls—it’s a creative expression of personality, love, and vision.
+                        <br><hr><button>Read More >>></button>
+                    </p>
+                    <div class="social-links">
+                      <a href="https://www.instagram.com/essentials_by_cyndy_interiors/profilecard/?igsh=NGphNXlhMGVyNWw1" target="_blank" class="social-link">
+                        <img src="{% static 'images/public/inst.png' %}" alt="Instagram" class="social-icon" />
+                      </a>
+                      <a href="https://wa.me/07014704116" target="_blank" class="social-link">
+                        <img src="{% static 'images/public/wha.png' %}" alt="WhatsApp" class="social-icon" />
+                      </a>
+                      <a href="https://www.facebook.com/share/18eP5baAdD/?mibextid=wwXIfr" target="_blank" class="social-link">
+                        <img src="{% static 'images/public/item--link.svg' %}" alt="facebook" class="social-icon" />
+                      </a>
+                      <a href="https://ng.linkedin.com/in/nkemmelu-cynthia-30115029b?utm_source=share&utm_medium=member_mweb&utm_campaign=share_via&utm_content=profile" target="_blank" class="social-link">
+                        <img src="{% static 'images/public/item--link-2.svg' %}" alt="linkedin" class="social-icon" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Gallery Images -->
+      <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 p-2">
+        <div class="row">
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 margi_bott">
+            <div class="Gallery_img">
+              <figure>
+                <img src="{% static 'images/public/gallery2.jpg' %}" />
+                <div class="overlay">
+                  <p>Hover Text 1</p>
+                </div>
+                <div class="bottom-overlay">
+                  <p>Always Visible Text 1</p>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 margi_bott">
+            <div class="Gallery_img">
+              <figure>
+                <img src="{% static 'images/public/galler2.jpg' %}" />
+                <div class="overlay">
+                  <p>Hover Text 2</p>
+                </div>
+                <div class="bottom-overlay">
+                  <p>Always Visible Text 2</p>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 margi_bott1">
+            <div class="Gallery_img">
+              <figure>
+                <img src="{% static 'images/public/gallery3.jpg' %}" />
+                <div class="overlay">
+                  <p>Hover Text 3</p>
+                </div>
+                <div class="bottom-overlay">
+                  <p>Always Visible Text 3</p>
+                </div>
+              </figure>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+            <div class="Gallery_img">
+              <figure>
+                <img src="{% static 'images/public/gallery4.jpg' %}" />
+                <div class="overlay">
+                  <p>Hover Text 4</p>
+                </div>
+                <div class="bottom-overlay">
+                  <p>Always Visible Text 4</p>
+                </div>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text and Social Links -->
+    </div>
+  </div>
+</div>
+
+<!-- Testimonial Start -->
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <h1 class="text-center ">Our Clients Say!!!</h1>
+        <div class="owl-carousel testimonial-carousel">
+            <div class="testimonial-item bg-light rounded p-4" style="">
+                <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                <p>
+                    "Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam."
+                </p>
+                <div class="d-flex align-items-center" >
+                    <img class="img-fluid flex-shrink-0 rounded" src="{% static 'images/public/testimonial-1.jpg' %}"
+                         style="width: 50px; height: 50px;">
+                    <div class="ps-3">
+                        <h5 class="mb-1">Client Name</h5>
+                        <small>Profession</small>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-item bg-light rounded p-4">
+                <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                <p>
+                    "Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam."
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded" src="{% static 'images/public/testimonial-2.jpg' %}" style="width: 50px; height: 50px;">
+                    <div class="ps-3">
+                        <h5 class="mb-1">Client Name</h5>
+                        <small>Profession</small>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-item bg-light rounded p-4">
+                <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                <p>
+                    "Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam."
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded" src="{% static 'images/public/testimonial-3.jpg' %}" style="width: 50px; height: 50px;">
+                    <div class="ps-3">
+                        <h5 class="mb-1">Client Name</h5>
+                        <small>Profession</small>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-item bg-light rounded p-4">
+                <i class="fa fa-quote-left fa-2x text-primary mb-3"></i>
+                <p>
+                    "Dolor et eos labore, stet justo sed est sed. Diam sed sed dolor stet amet eirmod eos labore diam."
+                </p>
+                <div class="d-flex align-items-center">
+                    <img class="img-fluid flex-shrink-0 rounded" src="{% static 'images/public/testimonial-4.jpg' %}" style="width: 50px; height: 50px;">
+                    <div class="ps-3">
+                        <h5 class="mb-1">Client Name</h5>
+                        <small>Profession</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <!-- Company Section -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-white mb-4">Company</h5>
+                <ul class="list-unstyled">
+                    <li><a class="btn btn-link text-white-50" href="#">About Us</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Contact Us</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Our Services</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Privacy Policy</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-white mb-4">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a class="btn btn-link text-white-50" href="#">About Us</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Contact Us</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Our Services</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Privacy Policy</a></li>
+                    <li><a class="btn btn-link text-white-50" href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-white mb-4">Contact</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Lagos, Nigeria</li>
+                    <li class="mb-2"><i class="fa fa-phone-alt me-3"></i>+234 701 470 4116</li>
+                    <li class="mb-2"><i class="fa fa-envelope me-3"></i>Essentialsbycyndy@gmail.com</li>
+                </ul>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-light btn-social me-1" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-social me-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-social me-1" href="#"><i class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-light btn-social" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <!-- Newsletter Section -->
+            <div class="col-lg-3 col-md-6">
+                <h5 class="text-white mb-4">Newsletter</h5>
+                <p>Subscribe to our newsletter to get the latest updates and offers.</p>
+                <form class="position-relative mx-auto" style="max-width: 400px;">
+                    <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="email" placeholder="Your email" required>
+                    <button type="submit" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row border-top pt-3">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                &copy; <a class="border-bottom text-white" href="#">Essentialsbycyndy.com</a>, <br><span id="currentYear"></span>. All Rights Reserved.
+            </div>
+            <script>
+    // Dynamically insert the current year
+    document.getElementById("currentYear").textContent = new Date().getFullYear();
+</script>
+
+            <div class="col-md-6 text-center text-md-end">
+                <div class="footer-menu d-inline-flex">
+                    <a href="#" class="text-white-50 me-3">Home</a>
+                    <a href="#" class="text-white-50 me-3">Cookies</a>
+                    <a href="#" class="text-white-50 me-3">Help</a>
+                    <a href="#" class="text-white-50">FAQs</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+            <!-- Back to Top -->
+<!-- Back-to-Top Button -->
+<a href="#" class="btns btn-lg btn-secondary back-to-top" id="backToTop" title="Back to Top">
+  <i class="fas fa-arrow-up" style=""></i>
+</a>
+    </div>
+</div>
+
+        <style>
+                .chat_option2 img {
+            border-radius: 50%;
+            width: 90%;
+            float: left;
+            margin: -30px 20px 10px 20px;
+            border-bottom: 2px solid white;
+            border-left: 3px solid white;
+            border-right: 3px solid white;
+        }
+
+            .error {
+            color: red;
+        }
+
+</style>
+
+
+<style>
+    /* Back-to-Top Button Styles */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: none; /* Initially hidden */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Circular button */
+  background-color: black; /* Secondary color */
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
+  text-align: center;
+  line-height: 50px; /* Centers the icon vertically */
+  transition: all 0.3s ease; /* Smooth hover effect */
+  z-index: 9999; /* Ensure visibility over other elements */
+}
+
+.back-to-top i {
+  font-size: 1.5rem; /* Icon size */
+}
+
+.back-to-top:hover {
+  background-color: white; /* Slightly darker secondary color on hover */
+  transform: translateY(-5px); /* Slight "lift" effect */
+}
+
+</style>
+
+<style>
+/* General Gallery Styles */
+
+/* On small screens, display the video */
+@media (max-width: 768px) {
+  .video-container {
+    display: block; /* Show the video on small screens */
+    margin-bottom: 20px; /* Add margin to separate from other content */
+  }
+
+  .col-xl-8, .col-lg-8, .col-md-8 {
+    order: 2; /* Move gallery images to come after the video on small screens */
+  }
+
+  .col-xl-4, .col-lg-4, .col-md-4 {
+    order: 1; /* Make sure the video comes first */
+  }
+}
+
+/* Larger screens: hide the video */
+@media (min-width: 769px) {
+  .col-xl-4, .col-lg-4, .col-md-4 {
+    order: 2; /* Keep gallery images in normal order on larger screens */
+  }
+
+  .col-xl-8, .col-lg-8, .col-md-8 {
+    order: 1; /* Gallery images are displayed first */
+  }
+}
+
+
+
+/* Default layout for larger screens */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.gallery-text-container {
+  order: 2; /* Gallery text (video container) comes second by default */
+}
+
+.Gallery_img {
+  order: 1; /* Gallery images come first by default */
+}
+
+/* For smaller screens (sm) */
+@media (max-width: 768px) {
+  /* Swap the order for small screens */
+  .gallery-text-container {
+    order: 1; /* Gallery text comes first on small screens */
+  }
+
+  .Gallery_img {
+    order: 2; /* Gallery images come second on small screens */
+  }
+}
+
+
+    .Gallery_img {
+  position: relative;
+  display: inline-block;
+}
+
+.Gallery_img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hover overlay */
+.Gallery_img .overlay {
+  position: absolute;
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease;
+}
+
+.Gallery_img:hover .overlay {
+  opacity: 1; /* Show on hover */
+}
+
+.Gallery_img .overlay p {
+  margin: 0;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Always visible text at the bottom */
+.Gallery_img .bottom-overlay {
+  position: absolute;
+  bottom: 0;
+  border-radius: 0 0 22px 22px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.Gallery_img .bottom-overlay p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+</style>
+<style>
+  .thick-underline {
+    display: inline-block; /* Allows underline to size properly */
+    position: relative; /* Enables absolute positioning for the underline */
+  }
+
+  .thick-underline::after {
+    content: ""; /* Creates the underline element */
+    position: absolute;
+    left: 0;
+    bottom: 5px; /* Adjusts the distance between text and underline */
+    width: 100%; /* Matches the width of the text */
+    height: 5px; /* Thickness of the underline */
+    background-color: aliceblue; /* Underline color, black by default */
+    border-radius: 12px; /* Optional: gives the underline rounded edges */
+  }
+</style>
+        <style>
+.gallery-container {
+  text-align: center;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.gallery-text h2 {
+  font-size: 2rem;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.gallery-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: aliceblue;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Spacing between social links */
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  color: #007bff; /* Change text color on hover */
+}
+
+.social-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px; /* Space between icon and text */
+  transition: transform 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2); /* Slight zoom effect on hover */
+}
+
+
+
+
+
+
+
+
+    /* Styling for the video container */
+.video-container {
+  padding: 1px;
+  border-radius: 25px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the "Read More" button */
+.btn-primary {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+</style>
+
+<style>
+    /* Styling for the logo image */
+.logo-img {
+  display: block;
+  margin: 0 auto 20px auto; /* Centers the logo and adds a bottom margin */
+  max-width: 30%; /* Sets a maximum width for the logo */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: 50%; /* Makes the image circular */
+}
+
+/* Styling for the content wrapper */
+.content-wrapper {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: center; /* Centers the text horizontally */
+  padding: 20px; /* Adds some space around the content */
+  display: flex; /* Enables flexbox layout */
+  align-items: center; /* Centers items horizontally */
+  justify-content: flex-end; /* Ensures content is at the bottom */
+}
+
+/* Custom font styling */
+.custom-text {
+  font-size: 1.2rem; /* Adjust font size */
+  font-weight: 500; /* Slightly bold the text */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds a subtle shadow for readability */
+  margin-top: 1px; /* Adds some space between the image and the text */
+}
+
+</style>
+<style>
+/* Container for loading effect */
+.loading-container {
+  position: relative;
+  width: 80px; /* Same as image width */
+  height: 80px; /* Same as image height */
+  display: inline-block;
+  text-align: center;
+}
+
+/* The loading animation */
+.loading-container::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  margin-left: -20px;
+  border-radius: 50%;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #3498db; /* Change the color as desired */
+  animation: spin 1s linear infinite;
+}
+
+/* When the image has loaded, remove the loading effect */
+.loading {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Keeping the image round */
+}
+
+/* Keyframes for spinning effect */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Hide the loading spinner when the image is fully loaded */
+.loading-container img.loaded {
+  opacity: 1;
+}
+
+.loading-container img {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Add 'loaded' class when the image is completely loaded */
+</style>
+<script>
+    // Get the image element
+const img = document.querySelector('.loading');
+
+// Add event listener to check when the image is loaded
+img.onload = function () {
+  img.classList.add('loaded');
+};
+
+</script>
+<script>
+    // Show/Hide Back-to-Top Button and Smooth Scroll
+window.addEventListener("scroll", function () {
+  const backToTopButton = document.getElementById("backToTop");
+  if (window.scrollY > 300) {
+    backToTopButton.style.display = "block";
+  } else {
+    backToTopButton.style.display = "none";
+  }
+});
+
+document.getElementById("backToTop").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+</script>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const text = "Hello! this is our official website...✔";
+        const welcomeTextElement = document.getElementById('welcomeText');
+        animateText(text, welcomeTextElement);
+    });
+
+    function animateText(text, element) {
+        let index = 0;
+        const typingSpeed = 100;
+        const interval = setInterval(function() {
+            element.innerHTML += text[index];
+            index++;
+            element.parentElement.scrollTop = element.parentElement.scrollHeight;
+            if (index === text.length) {
+                clearInterval(interval);
+            }
+        }, typingSpeed);
+    }
+
+    // Hide the loading screen once the page has fully loaded
+    window.addEventListener('load', function() {
+        document.getElementById('loadingScreen').style.display = 'none';
+    });
+</script>
+
+
+
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'lib/wow/wow.min.js' %}"></script>
+<script src="{% static 'lib/easing/easing.min.js' %}"></script>
+<script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+<script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+<!-- Template Javascript -->
+<script src="{% static 'js/main.js' %}"></script>
+
+{% endblock content %}

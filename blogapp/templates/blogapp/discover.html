@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Event</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: DarkSlateGrey;
+            padding: 20px;
+            border-radius: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h4 {
+            text-align: center;
+            color: white;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            color: #00ff80;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+              border-top-right-radius: 25px; /* Radius for bottom right corner */
+              border-top-left-radius: 25px; /* Radius for bottom left corner */
+              color: #339966;
+
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div style="padding-top: 100px;"></div>
+    <div class="container">
+        <h4>Book Event ( {{ event.name }} )</h4>
+<form method="post">
+    {% csrf_token %}
+    <table>
+        <thead>
+            <tr>
+                <th>CATEGORIES</th>
+                <th>NUMBER OF TICKETS</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.grade }} - ${{ category.price }}</td>
+                    <td>
+                        <input type="number" name="number_of_tickets{{ forloop.counter }}" id="id_number_of_tickets{{ forloop.counter }}" min="1" step="1">
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit">Book Now</button>
+</form>
+    </div>
+    <div class="container">
+        <div class="event-card">
+            <h1 class="event-title">{{ event.title }}</h1>
+            <p class="event-detail">{{ event.description }}</p>
+            <p class="event-detail"><i class="icon fas fa-map-marker-alt"></i> Location:<span> {{ event.location }}</span></p>
+            <p class="event-detail"><i class="icon fas fa-calendar-alt"></i> Start Date: <span> {{ event.start_date }}</span></p>
+            <p class="event-detail"><i class="icon fas fa-calendar-alt"></i> End Date: <span> {{ event.end_date }}</span></p>
+            <p class="event-detail"><i class="icon fas fa-users"></i> Capacity: <span> {{ event.capacity }}</span></p>
+            <p class="event-detail"><i class="icon fas fa-eye"></i> Views By: <span> {{ event.unique_views }} Persons</span></p>
+            <p class="event-detail"><i class="icon fas fa-ticket-alt"></i> Total Tickets Bought: <span> {{ total_tickets }}</span></p>
+        </div>
+    </div>
+    <style>
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease;
+            color: white; /* Text color */
+        }
+
+        .event-card:hover {
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .event-title {
+            font-family: 'Vast Shadow', cursive;
+            color: navy; /* Title color */
+            margin-bottom: 20px;
+        }
+
+        .event-detail {
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .event-detail strong {
+            font-weight: bold;
+        }
+
+        .event-detail span {
+            font-style: italic;
+        }
+    </style>
+
+</body>
+{% endblock %}
+
+</html>

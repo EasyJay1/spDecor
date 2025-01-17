@@ -1,0 +1,150 @@
+{% extends "base_accounts.html" %}
+{% load i18n %}
+{% load allauth %}
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+{% block content %}
+
+<style>
+    /* styles.css */
+.menu {
+    display: flex;
+    gap: 10px;
+    margin: 20px;
+}
+
+
+.modal {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 100%;
+}
+
+.modal-content {
+    width: 400px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.13);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+p{
+color: white;
+}
+.close {
+float: right;
+ top: -10px;
+ text-decoration: none;
+ color: white;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+.reload {
+float: left;
+ top: -10px;
+ text-decoration: none;
+ color: aliceblue;
+}
+
+.reload:hover,
+.reload:focus {
+    color: #4285f4;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#continueButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    color: white;
+    background-color: #4285f4;
+    border: none;
+    text-align: center;
+    border-radius: 50px;
+}
+
+</style>
+<div style="">
+<div class="header" id="google">
+    {% if process == "connect" %}
+        {% element h1 %}
+            {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
+        {% endelement %}
+        <p>
+            {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+        </p>
+    {% else %}
+        {% element h1 %}
+            {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
+        {% endelement %}
+        <p>
+            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+        </p>
+    {% endif %}
+</div>
+<div class="menu" id="signInViaGoogleButton">
+    {% element form method="post" no_visible_fields=True %}
+        {% slot actions %}
+            {% csrf_token %}
+            {% element button type="submit" %}
+                <button class="btn2" >{% trans "Continue" %}</button>
+            {% endelement %}
+        {% endslot %}
+    {% endelement %}
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <div><a href="" class="reload"> ↻</a> <a href="{% url 'account_login' %}" class="close" style=""> &times;</a></div>
+<hr style="color: white;">
+        <p>Connecting third-party account from Google.</p>
+        <a href="" id="continueButton">Loading...</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const signInViaGoogleButton = document.getElementById('signInViaGoogleButton');
+    const modal = document.getElementById('modal');
+
+    signInViaGoogleButton.addEventListener('click', function() {
+        modal.style.display = 'block';
+        log.style.display = 'none';
+        google.style.display = 'none';
+        signInViaGoogleButton.style.display = 'none';
+    });
+
+    closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+
+        }
+    });
+});
+</script>
+</div>
+<div style="padding-top:130px;"></div>
+
+<div class="" id="log" style="float: right;">
+    <a href="{% url 'account_login' %}" class="btn2" id="signInButton">Sign In</a>
+    <a href="{% url 'account_signup' %}" class="btn2" id="signUpButton">Sign Up</a>
+</div>
+
+{% endblock content %}

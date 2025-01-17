@@ -1,0 +1,34 @@
+<!-- templates/admin/deactivate_ticket.html -->
+
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+<div class="container_capture">
+    <h1 class="text-center">Ticket Scanner</h1>
+    <div class="text-center">
+        <strong id="result"></strong>
+        <form style="font-family: sans-serif;" id="ticket-form" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <button class="btn"  id="scan-button" type="submit">Scan Now</button>
+        </form>
+        <a class="fas mt-3" href="{% url 'qr_code_scanner' %}">Use Camera QR-Checker</a>
+    </div>
+</div>
+</body>
+<script>
+    // JavaScript to handle form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('ticket-form').addEventListener('submit', function(event) {
+            // Show loading spinner
+            document.getElementById('loading-spinner').style.display = 'block';
+
+            // Disable the submit button to prevent multiple submissions
+            document.getElementById('scan-button').setAttribute('disabled', 'disabled');
+        });
+    });
+</script>
+
+{% endblock %}

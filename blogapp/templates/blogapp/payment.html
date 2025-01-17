@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Required</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .payment-container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .payment-button {
+            cursor: pointer;
+            background-color: #ff9b00;
+            color: #12122c;
+            padding: 10px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 4px;
+            border: none;
+            transition: all 0.1s ease-in;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .payment-button:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Proceed to Payment</h2>
+        {% if user.is_authenticated %}
+            <p>Hello, {{ customer_name }}!</p>
+            <p>{{ customer_email }}</p>
+        {% else %}
+            <p>You are not logged in.</p>
+        {% endif %}
+        <hr>
+        <p><strong>Your total cost is: {{ total_cost }}</strong></p>
+        <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+            <input type="hidden" name="public_key" value="FLWPUBK-a261e950f53f4968355107fd0bcdf192-X" />
+            <input type="hidden" name="customer[email]" value="{{ customer_email }}" />
+            <input type="hidden" name="customer[name]" value="{{ customer_name }}" />
+            <input type="hidden" name="tx_ref" value="{{ tx_ref }}" />
+            <input type="hidden" name="amount" value="{{ total_cost }}" />
+            <input type="hidden" name="currency" value="NGN" />
+            <input type="hidden" name="meta[source]" value="docs-html-test" />
+            <button type="submit" class="payment-button">Pay Now</button>
+        </form>
+    </div>
+</body>
+</html>

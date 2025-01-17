@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}
+<title>EASY-JAY TECHNOLOGIES</title>
+{% endblock title %}
+
+{% block content %}
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Tickets</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: gray;
+        }
+        .hidden-table {
+            display: none;
+            margin-top: 20px;
+        }
+        .tickets-container {
+            display: flex;
+            flex-wrap: wrap;
+            overflow: auto;
+            max-height: 400px; /* Adjust this value as needed */
+        }
+        .ticket-card {
+            flex: 1 0 21%; /* 4 columns */
+            margin: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .ticket-card img {
+            width: 100px;
+            height: 100px;
+        }
+        .download-button {
+            display: inline-block;
+            margin: 5px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 10px;
+            border-radius: 5px;
+        }
+        .download-button:hover {
+            background-color: #45a049;
+        }
+        .table-container {
+            max-height: 400px; /* Adjust this value as needed */
+            overflow: auto;
+            margin-top: 20px;
+            padding:10px;
+
+        }
+        @media (max-width: 600px) {
+            .ticket-card {
+                flex: 1 0 46%; /* 2 columns on small screens */
+            }
+        }
+    </style>
+    <script>
+        function toggleTable(bookingId) {
+            var table = document.getElementById('tickets-table-' + bookingId);
+            if (table.style.display === 'none' || table.style.display === '') {
+                table.style.display = 'table';
+            } else {
+                table.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+
+<body>
+<div style="padding: 20px;"></div>
+
+<div style="padding:20px;">
+    {% if user.is_authenticated %}
+        <p>My Bookings</p>
+        {% if user_bookings %}
+            <div class="table-container">
+                <table>
+                    <a  href="{% url 'download_tickets' %}" class="download-button">Zip Download all Ticket(s)
+                        <br><small>Backup ({{ total_tickets }}) Ticket</small></a>
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Tickets</th>
+                            <th>Booking Date</th>
+                            <th>Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in user_bookings %}
+                            <tr>
+                                <td>{{ booking.event.name }}</td>
+                                <td>
+                                    <a style="color:aliceblue" href="javascript:void(0);" onclick="toggleTable('{{ booking.id }}');">
+                                        Click >>> {{ booking.number_of_tickets }}
+                                    </a>
+                                    <table id="tickets-table-{{ booking.id }}" class="hidden-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticket Code</th>
+                                                <th>QR Code</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for ticket in booking.tickets.all %}
+                                                <tr>
+                                                    <td>{{ ticket.unique_code }}</td>
+                                                    <td>
+                                                        <a href="{{ ticket.qr_code.url }}" target="_blank">
+                                                            <img src="{{ ticket.qr_code.url }}" alt="QR Code for {{ ticket.unique_code }}" width="50">
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td>{{ booking.booking_date }}</td>
+                                <td>{{ booking.category }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>You have no bookings.</p>
+        {% endif %}
+
+        <div style="display: none;">
+            <p class="row p-3">My Tickets</p>
+            {% if tickets_by_category %}
+                {% for category, tickets in tickets_by_category.items %}
+                    <div class="tickets-container">
+                        {% for ticket in tickets %}
+                            <div class="ticket-card" >
+                                <a href="{{ ticket.qr_code.url }}" target="_blank">
+                                    <img src="{{ ticket.qr_code.url }}" alt="QR Code for {{ ticket.unique_code }}">
+                                </a>
+                                <p>Ticket Code: {{ ticket.unique_code }}</p>
+                                <p>Event: {{ ticket.booking.event.name }}</p>
+                                <p>Category: {{ ticket.booking.category }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <hr style="color:white">
+                {% endfor %}
+            {% else %}
+                <p>You have no tickets.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>You need to <a href="{% url 'account_login' %}">log in</a> to view your tickets.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
+
+{% endblock %}

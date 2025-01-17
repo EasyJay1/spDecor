@@ -1,0 +1,104 @@
+{% extends "base_accounts.html" %}
+{% load i18n %}
+{% load static %}
+{% load socialaccount %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid justify-content-center" style='padding-top:50px;'>
+            <div class="over-pack">
+            <div class="packs">
+            <div class="ring">
+                <i style="--clr:#ff0057;"></i>
+                <i style="--clr:#fffd44;"></i>
+                <i style="--clr:#0000ff;"></i> <!-- Blue -->
+                <div class="login">
+                    <p style="font-family: 'Eagle Lake'; color: #4285f4;">Get Started</p>
+                <div class="social-login text-center ">
+                    <a href="{% provider_login_url 'google' %}" class="google">
+                        <img width="50" class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/goo.png' %}"
+                        style="border-radius: 50%;">
+                    </a>
+                    <a href="#" class="facebook">
+                        <img class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/item--link.svg' %}" /> <!-- Font Awesome icon for Facebook -->
+                    </a>
+                    <a href="#" class="git">
+                        <img width="40" class="icon-link" loading="lazy" alt="Link 1" src="{% static 'images/public/git2.png' %}"/>
+                    </a>
+                </div>
+
+                    <div class="inputBx">
+
+                        <form class=""  id="login_form" method="post" action="{% url 'account_signup' %}">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            {% if field.name != "checkin" %} {# Skip the check-in field #}
+                            <input class="form-control {% if field.errors %}is-invalid{% endif %}" type="{{ field.field.widget.input_type }}"
+                                placeholder="{{ field.label }}" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                                {% if field.required %}required{% endif %}>
+                            {% if field.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in field.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+
+                            {# Only include the check-in field for debugging #}
+                            {# Check-in field #}
+                            <span class="form-check">
+                                <label class="form-check-label" for="checkin" required>
+                                    I Accept Terms
+                                </label>
+                                {% if form.errors.checkin %}
+                                <div class="invalid-feedback">
+                                    {{ form.errors.checkin }}
+                                </div>
+                                {% endif %}
+                                <input class="k" type="checkbox" id="checkin" name="checkin" value="I Accept Terms & Conditions" required>
+                            </span>
+
+                            <div class="inputBx" >
+                                <input id="submit-btn" type="submit" value="Sign in">
+                            </div>
+                            <style>
+                                .form-check {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: flex-start;
+                                    margin-bottom: 0rem;
+                                }
+
+                                .k {
+                                    margin-bottom: 0rem;
+                                    top: -1rem;
+                                }
+
+                                .invalid-feedback {
+                                    display: block;
+                                    color: #dc3545; /* This color can be adjusted as per your theme */
+                                }
+                            </style>
+                        </form>
+                    </div>
+                        <div class="links">
+                            <a href="{% url 'account_login' %}"><p>Already Have An Account? Sign in</p></a>
+                        </div>
+
+                </div>
+            </div>
+            </div>
+            </div>
+    </div>
+  <script>
+    document.getElementById('login_form').addEventListener('submit', function () {
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('please-wait-message').style.display = 'flex';
+    });
+  </script>
+
+{% endblock %}

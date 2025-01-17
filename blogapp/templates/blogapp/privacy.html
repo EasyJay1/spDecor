@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<link href="{% static 'css/musicweb.css' %}" rel="stylesheet">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Privacy Policy</title>
+</head>
+<body style="background-color: lightgray;">
+    <div class="terms-container">
+        <h1 class="title">Privacy Policy</h1>
+        <p class="last-updated">Last Updated: [Date: {% now "Y-m-d" %}]</p>
+
+        <p>Welcome to Easy-Jay Technologies ("Company," "we," "us," "our"). This Privacy Policy ("Policy") outlines how we collect, use, and protect your personal information. By using our website and services, you consent to the practices described in this Policy.</p>
+
+        <h2 class="section-title">1. Information We Collect</h2>
+        <p><strong>1.1 Personal Information:</strong> We may collect personal information that you provide to us, such as your name, email address, contact details, and any other information you voluntarily submit.</p>
+        <p><strong>1.2 Automatically Collected Information:</strong> We may collect information about your use of our website, including your IP address, browser type, pages visited, and other usage information.</p>
+
+        <h2 class="section-title">2. How We Use Your Information</h2>
+        <p><strong>2.1:</strong> We use your personal information to provide and improve our services, respond to your inquiries, and communicate with you.</p>
+        <p><strong>2.2:</strong> We may use cookies and similar technologies to enhance your experience on our website and to gather information about how our website is used.</p>
+
+        <h2 class="section-title">3. Information Sharing</h2>
+        <p><strong>3.1:</strong> We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as required by law or as necessary to provide our services.</p>
+
+        <h2 class="section-title">4. Your Choices</h2>
+        <p><strong>4.1:</strong> You can manage your communication preferences by opting out of receiving certain emails from us.</p>
+        <p><strong>4.2:</strong> You can disable cookies through your browser settings, but this may affect the functionality of our website.</p>
+
+        <h2 class="section-title">5. Data Security</h2>
+        <p><strong>5.1:</strong> We implement reasonable security measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction.</p>
+
+        <h2 class="section-title">6. Links to Third-Party Websites</h2>
+        <p><strong>6.1:</strong> Our website may contain links to third-party websites. We are not responsible for the privacy practices or content of these websites.</p>
+
+        <h2 class="section-title">7. Children's Privacy</h2>
+        <p><strong>7.1:</strong> Our website and services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children.</p>
+
+        <h2 class="section-title">8. Changes to this Privacy Policy</h2>
+        <p><strong>8.1:</strong> We reserve the right to modify or update this Policy at any time. The most current version will be posted on our website.</p>
+
+        <h2 class="section-title">9. Contact Information</h2>
+        <p>If you have any questions about these Terms, please contact us at <a
+                href="contact">contact@easyjaytech.com</a>.</p>
+
+        <p class="disclaimer">It's also recommended to seek
+            legal advice when finalizing our Terms of Use, if NOT readily clear about what you want.</p>
+    </div>
+</body>
+</html>
+{% endblock content %}
